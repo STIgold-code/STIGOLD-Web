@@ -1,0 +1,62 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import styles from './MobileMenu.module.css';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navLinks = [
+  { href: getLocalizedPath('/', lang), label: t('nav.home') },
+  { href: getLocalizedPath('/#servicios', lang), label: t('nav.services') },
+  { href: getLocalizedPath('/#portafolio', lang), label: t('nav.portfolio') },
+  { href: getLocalizedPath('/#nosotros', lang), label: t('nav.about') },
+  { href: getLocalizedPath('/#contacto', lang), label: t('nav.contact') },
+];
+---
+
+<div class={styles.overlay} id="menuOverlay"></div>
+<div class={styles.menu} id="mobileMenu">
+  <button class={styles.closeBtn} id="menuClose" aria-label="Close menu">
+    <svg class={styles.closeIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  <nav>
+    <ul class={styles.navList}>
+      {navLinks.map(link => (
+        <li>
+          <a href={link.href} class={styles.navLink}>{link.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</div>
+
+<script is:inline>
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuOverlay = document.getElementById('menuOverlay');
+
+  function openMenu() {
+    mobileMenu?.setAttribute('data-open', '');
+    menuOverlay?.setAttribute('data-open', '');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileMenu?.removeAttribute('data-open');
+    menuOverlay?.removeAttribute('data-open');
+    document.body.style.overflow = '';
+  }
+
+  menuToggle?.addEventListener('click', openMenu);
+  menuClose?.addEventListener('click', closeMenu);
+  menuOverlay?.addEventListener('click', closeMenu);
+
+  // Close on nav link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

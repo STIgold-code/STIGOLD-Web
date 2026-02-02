@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import styles from './BaseLayout.module.css';
+import Header from '../components/Header.astro';
+import MobileMenu from '../components/MobileMenu.astro';
 
 interface Props {
   title: string;
@@ -27,6 +29,8 @@ const { title, description = 'STIGOLD - Desarrollo de software y soluciones tecn
   </head>
   <body>
     <div class={styles.page}>
+      <Header />
+      <MobileMenu />
       <main class={styles.main}>
         <slot />
       </main>

@@ -1,0 +1,43 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import ThemeToggle from './ThemeToggle.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import styles from './Header.module.css';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const navLinks = [
+  { href: getLocalizedPath('/', lang), label: t('nav.home') },
+  { href: getLocalizedPath('/#servicios', lang), label: t('nav.services') },
+  { href: getLocalizedPath('/#portafolio', lang), label: t('nav.portfolio') },
+  { href: getLocalizedPath('/#nosotros', lang), label: t('nav.about') },
+  { href: getLocalizedPath('/#contacto', lang), label: t('nav.contact') },
+];
+---
+
+<header class={styles.header}>
+  <div class={styles.container}>
+    <a href={getLocalizedPath('/', lang)} class={styles.logo}>
+      <img src="/images/logo.png" alt="STIGOLD" class={styles.logoImg} />
+    </a>
+
+    <nav class={styles.nav}>
+      {navLinks.map(link => (
+        <a href={link.href} class={styles.navLink}>{link.label}</a>
+      ))}
+    </nav>
+
+    <div class={styles.actions}>
+      <LanguageSwitcher />
+      <ThemeToggle />
+      <button class={styles.hamburger} id="menuToggle" aria-label="Toggle menu">
+        <svg class={styles.hamburgerIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

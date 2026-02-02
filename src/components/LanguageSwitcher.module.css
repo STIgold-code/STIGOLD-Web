@@ -1,0 +1,32 @@
+.switcher {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.lang {
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  text-decoration: none;
+}
+
+.lang:hover {
+  color: var(--color-accent);
+}
+
+.active {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.separator {
+  color: var(--border-color);
+  font-size: 0.875rem;
+}
