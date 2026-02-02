@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+import ProjectCard from '../ProjectCard.astro';
+import AnimatedText from '../AnimatedText.tsx';
+import styles from './Portfolio.module.css';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.lang === lang && project.data.featured)
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const projectsBasePath = lang === 'es' ? '/proyectos' : '/projects';
+---
+
+<section class={styles.section} id="portafolio">
+  <div class={styles.container}>
+    <AnimatedText client:visible>
+      <div class={styles.header}>
+        <h2 class={styles.title}>{t('portfolio.title')}</h2>
+        <p class={styles.subtitle}>{t('portfolio.subtitle')}</p>
+      </div>
+    </AnimatedText>
+
+    <div class={styles.grid}>
+      {featuredProjects.map((project, i) => (
+        <AnimatedText client:visible delay={i * 0.15}>
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            thumbnail={project.data.thumbnail}
+            tags={project.data.tags}
+            href={getLocalizedPath(`${projectsBasePath}/${project.data.slug}`, lang)}
+          />
+        </AnimatedText>
+      ))}
+    </div>
+
+    <AnimatedText client:visible>
+      <a href={getLocalizedPath(projectsBasePath, lang)} class={styles.viewAll}>
+        {t('portfolio.viewAll')} →
+      </a>
+    </AnimatedText>
+  </div>
+</section>

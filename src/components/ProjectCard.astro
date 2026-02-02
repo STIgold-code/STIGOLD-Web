@@ -1,0 +1,30 @@
+---
+import styles from './ProjectCard.module.css';
+
+interface Props {
+  title: string;
+  description: string;
+  thumbnail: string;
+  tags: string[];
+  href: string;
+}
+
+const { title, description, thumbnail, tags, href } = Astro.props;
+---
+
+<a href={href} style="text-decoration: none;">
+  <article class={styles.card}>
+    <div class={styles.imageWrapper}>
+      <img src={thumbnail} alt={title} class={styles.image} loading="lazy" />
+    </div>
+    <div class={styles.body}>
+      <h3 class={styles.title}>{title}</h3>
+      <p class={styles.description}>{description}</p>
+      <div class={styles.tags}>
+        {tags.map(tag => (
+          <span class={styles.tag}>{tag}</span>
+        ))}
+      </div>
+    </div>
+  </article>
+</a>
