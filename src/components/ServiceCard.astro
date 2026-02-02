@@ -1,0 +1,30 @@
+---
+import styles from './ServiceCard.module.css';
+
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  linkText: string;
+  linkHref: string;
+}
+
+const { icon, title, description, linkText, linkHref } = Astro.props;
+---
+
+<div class={styles.card}>
+  <div class={styles.iconWrapper}>
+    <svg class={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d={icon}></path>
+    </svg>
+  </div>
+  <h3 class={styles.title}>{title}</h3>
+  <p class={styles.description}>{description}</p>
+  <a href={linkHref} class={styles.link}>
+    {linkText}
+    <svg class={styles.arrow} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+  </a>
+</div>
