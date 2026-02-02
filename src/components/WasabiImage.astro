@@ -1,0 +1,25 @@
+---
+import { getWasabiUrl } from '../lib/wasabi';
+
+interface Props {
+  path: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { path, alt, width, height, class: className, loading = 'lazy' } = Astro.props;
+const src = getWasabiUrl(path);
+---
+
+<img
+  src={src}
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  decoding="async"
+/>
