@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import styles from './404.module.css';
+---
+
+<BaseLayout title="404 - STIGOLD" lang="es">
+  <div class={styles.container}>
+    <img src="/images/logo.png" alt="STIGOLD" class={styles.logo} />
+    <div class={styles.code}>404</div>
+    <h1 class={styles.title}>Página no encontrada / Page not found</h1>
+    <p class={styles.message}>
+      Lo sentimos, la página que buscas no existe.<br />
+      Sorry, the page you're looking for doesn't exist.
+    </p>
+    <a href="/es/" class={styles.link}>
+      Volver al inicio / Back to home
+    </a>
+  </div>
+</BaseLayout>
