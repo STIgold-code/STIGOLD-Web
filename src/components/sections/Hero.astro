@@ -1,0 +1,38 @@
+---
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../../i18n/utils';
+import AnimatedText from '../AnimatedText.tsx';
+import styles from './Hero.module.css';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class={styles.hero} id="hero">
+  <div class={`${styles.decoration} ${styles.decorCircle1}`}></div>
+  <div class={`${styles.decoration} ${styles.decorCircle2}`}></div>
+
+  <div class={styles.content}>
+    <AnimatedText client:visible>
+      <h1 class={styles.title}>
+        {t('hero.title')}
+      </h1>
+    </AnimatedText>
+
+    <AnimatedText client:visible delay={0.2}>
+      <p class={styles.subtitle}>
+        {t('hero.subtitle')}
+      </p>
+    </AnimatedText>
+
+    <AnimatedText client:visible delay={0.4}>
+      <div class={styles.ctas}>
+        <a href={getLocalizedPath('/#portafolio', lang)} class={styles.ctaPrimary}>
+          {t('hero.cta.projects')}
+        </a>
+        <a href={getLocalizedPath('/#contacto', lang)} class={styles.ctaSecondary}>
+          {t('hero.cta.contact')}
+        </a>
+      </div>
+    </AnimatedText>
+  </div>
+</section>
