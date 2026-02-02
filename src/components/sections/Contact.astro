@@ -1,0 +1,52 @@
+---
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import ContactForm from '../ContactForm.tsx';
+import AnimatedText from '../AnimatedText.tsx';
+import styles from './Contact.module.css';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const translations = {
+  name: t('contact.name'),
+  email: t('contact.email'),
+  message: t('contact.message'),
+  send: t('contact.send'),
+  success: t('contact.success'),
+  error: t('contact.error'),
+};
+---
+
+<section class={styles.section} id="contacto">
+  <div class={styles.container}>
+    <div class={styles.header}>
+      <AnimatedText client:visible>
+        <h2 class={styles.title}>{t('contact.title')}</h2>
+        <p class={styles.subtitle}>{t('contact.subtitle')}</p>
+      </AnimatedText>
+
+      <div class={styles.contactInfo}>
+        <div class={styles.contactItem}>
+          <svg class={styles.contactIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>contacto@stigold.com</span>
+        </div>
+        <div class={styles.contactItem}>
+          <svg class={styles.contactIcon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>Lima, Peru</span>
+        </div>
+      </div>
+    </div>
+
+    <AnimatedText client:visible delay={0.2}>
+      <div class={styles.formWrapper}>
+        <ContactForm client:visible translations={translations} lang={lang} />
+      </div>
+    </AnimatedText>
+  </div>
+</section>
