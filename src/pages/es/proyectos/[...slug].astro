@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import ProjectLayout from '../../../layouts/ProjectLayout.astro';
+
+const { slug } = Astro.params;
+
+const allProjects = await getCollection('projects');
+const project = allProjects.find(
+  p => p.data.lang === 'es' && p.data.slug === slug
+);
+
+if (!project) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await render(project);
+---
+
+<ProjectLayout
+  title={project.data.title}
+  description={project.data.description}
+  client={project.data.client}
+  date={project.data.date}
+  tags={project.data.tags}
+  thumbnail={project.data.thumbnail}
+>
+  <Content />
+</ProjectLayout>

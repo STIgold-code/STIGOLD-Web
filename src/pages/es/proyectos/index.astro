@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectCard from '../../../components/ProjectCard.astro';
+import AnimatedText from '../../../components/AnimatedText.tsx';
+import styles from '../../../components/sections/Portfolio.module.css';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects
+  .filter(p => p.data.lang === 'es')
+  .sort((a, b) => b.data.date.localeCompare(a.data.date));
+---
+
+<BaseLayout title="Proyectos - STIGOLD" description="Conoce los proyectos desarrollados por STIGOLD." lang="es">
+  <section class={styles.section}>
+    <div class={styles.container}>
+      <AnimatedText client:visible>
+        <div class={styles.header}>
+          <h1 class={styles.title}>Nuestros Proyectos</h1>
+          <p class={styles.subtitle}>Conoce algunos de los proyectos que hemos desarrollado.</p>
+        </div>
+      </AnimatedText>
+
+      <div class={styles.grid}>
+        {projects.map((project, i) => (
+          <AnimatedText client:visible delay={i * 0.1}>
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              thumbnail={project.data.thumbnail}
+              tags={project.data.tags}
+              href={`/es/proyectos/${project.data.slug}`}
+            />
+          </AnimatedText>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

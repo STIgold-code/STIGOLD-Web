@@ -1,0 +1,51 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
+import styles from './ProjectLayout.module.css';
+
+interface Props {
+  title: string;
+  description: string;
+  client: string;
+  date: string;
+  tags: string[];
+  thumbnail: string;
+}
+
+const { title, description, client, date, tags, thumbnail } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const projectsPath = lang === 'es' ? '/proyectos' : '/projects';
+const backText = lang === 'es' ? 'Volver a proyectos' : 'Back to projects';
+---
+
+<BaseLayout title={`${title} - STIGOLD`} description={description} lang={lang}>
+  <article class={styles.article}>
+    <a href={getLocalizedPath(projectsPath, lang)} class={styles.backLink}>
+      <svg class={styles.backArrow} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      {backText}
+    </a>
+
+    <header class={styles.header}>
+      <h1 class={styles.title}>{title}</h1>
+      <div class={styles.meta}>
+        <span class={styles.metaItem}>{client}</span>
+        <span class={styles.metaItem}>{date}</span>
+      </div>
+      <div class={styles.tags}>
+        {tags.map(tag => (
+          <span class={styles.tag}>{tag}</span>
+        ))}
+      </div>
+    </header>
+
+    <img src={thumbnail} alt={title} class={styles.thumbnail} loading="lazy" />
+
+    <div class={styles.content}>
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
