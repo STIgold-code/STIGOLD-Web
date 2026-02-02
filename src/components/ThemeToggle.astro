@@ -20,20 +20,6 @@ import styles from './ThemeToggle.module.css';
 </button>
 
 <script is:inline>
-  const theme = (() => {
-    const stored = localStorage?.getItem('theme') ?? '';
-    if (['dark', 'light'].includes(stored)) return stored;
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-    return 'light';
-  })();
-
-  if (theme === 'dark') {
-    document.documentElement.classList.add('dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-  }
-  localStorage.setItem('theme', theme);
-
   document.getElementById('themeToggle')?.addEventListener('click', () => {
     const el = document.documentElement;
     el.classList.toggle('dark');

@@ -9,3 +9,8 @@ dist/
 
 # Astro generated types
 .astro/
+
+# IDE / tools
+.claude/
+.playwright-mcp/
+ss/

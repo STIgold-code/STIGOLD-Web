@@ -79,13 +79,6 @@
   transition: background-color var(--transition-base), border-color var(--transition-base);
 }
 
-.visualCard:nth-child(2) {
-  transform: translateY(var(--space-lg));
-}
-
-.visualCard:nth-child(3) {
-  transform: translateY(calc(-1 * var(--space-lg)));
-}
 
 .visualIcon {
   width: 32px;

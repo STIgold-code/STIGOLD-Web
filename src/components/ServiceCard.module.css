@@ -3,6 +3,9 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   transition: transform var(--transition-base), box-shadow var(--transition-base),
               background-color var(--transition-base), border-color var(--transition-base);
 }
@@ -41,6 +44,7 @@
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-md);
+  flex: 1;
 }
 
 .link {
