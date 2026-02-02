@@ -1,0 +1,87 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  lang?: string;
+  image?: string;
+  url?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description,
+  lang = 'es',
+  image = '/images/logo.png',
+  url = Astro.url.href,
+  type = 'website',
+} = Astro.props;
+
+const siteName = 'STIGOLD';
+const siteUrl = 'https://stigold.com';
+
+const altLang = lang === 'es' ? 'en' : 'es';
+const currentPath = Astro.url.pathname.replace(/^\/(es|en)/, '') || '/';
+const altUrl = `${siteUrl}/${altLang}${currentPath}`;
+const canonicalUrl = url.startsWith('http') ? url : `${siteUrl}${url}`;
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+const jsonLd = type === 'website'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: siteName,
+      url: siteUrl,
+      logo: `${siteUrl}/images/logo.png`,
+      description: description,
+      sameAs: [
+        'https://github.com/STIgold-code',
+        'https://linkedin.com/company/stigold',
+      ],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'contacto@stigold.com',
+        contactType: 'customer service',
+        availableLanguage: ['Spanish', 'English'],
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: description,
+      image: ogImage,
+      author: {
+        '@type': 'Organization',
+        name: siteName,
+      },
+    };
+---
+
+<!-- Primary Meta -->
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Canonical & Alternates -->
+<link rel="canonical" href={canonicalUrl} />
+<link rel="alternate" hreflang={lang} href={canonicalUrl} />
+<link rel="alternate" hreflang={altLang} href={altUrl} />
+<link rel="alternate" hreflang="x-default" href={`${siteUrl}/es/`} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_US'} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
