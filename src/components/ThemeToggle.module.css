@@ -1,0 +1,39 @@
+.toggle {
+  background: none;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.sunIcon {
+  display: block;
+}
+
+.moonIcon {
+  display: none;
+}
+
+:global(.dark) .sunIcon {
+  display: none;
+}
+
+:global(.dark) .moonIcon {
+  display: block;
+}
